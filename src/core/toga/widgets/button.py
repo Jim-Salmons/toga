@@ -9,6 +9,7 @@ class Button(Widget):
     Args:
         label (str): Text to be shown on the button.
         id (str): An identifier for this widget.
+        key_equivalent (str): An optional key combination to trigger the button.
         style (:obj:`Style`): An optional style object. If no style is provided then
             a new one will be created for the widget.
         on_press (:obj:`callable`): Function to execute when pressed.
@@ -20,7 +21,8 @@ class Button(Widget):
     """
 
     def __init__(
-            self, label, id=None, style=None, on_press=None, enabled=True, factory=None
+            self, label, key_equivalent='', id=None, style=None, on_press=None,
+            enabled=True, factory=None
     ):
         super().__init__(id=id, style=style, enabled=enabled, factory=factory)
 
@@ -29,6 +31,7 @@ class Button(Widget):
 
         # Set all the properties
         self.label = label
+        self.key_equivalent = key_equivalent
         self.on_press = on_press
         self.enabled = enabled
 
@@ -48,6 +51,22 @@ class Button(Widget):
             self._label = str(value)
         self._impl.set_label(value)
         self._impl.rehint()
+
+    @property
+    def key_equivalent(self):
+        """
+        Returns:
+            The button key_equivalent as a ``str``
+        """
+        return self._key_equivalent
+
+    @key_equivalent.setter
+    def key_equivalent(self, value):
+        if value is None:
+            self._key_equivalent = ''
+        else:
+            self._key_equivalent = str(value)
+        self._impl.set_key_equivalent(value)
 
     @property
     def on_press(self):

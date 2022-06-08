@@ -35,6 +35,8 @@ class Button(Widget):
         self.native.buttonType = NSMomentaryPushInButton
         self.native.target = self.native
         self.native.action = SEL('onPress:')
+        self.native.keyEquivalent = ''
+        self.native.focus = False
 
         # Add the layout constraints
         self.add_constraints()
@@ -49,6 +51,16 @@ class Button(Widget):
     def set_on_press(self, handler):
         # No special handling required
         pass
+
+    def set_key_equivalent(self, key_equivalent):
+        self.native.keyEquivalent = self.interface.key_equivalent
+    
+    def set_focus(self, value=True):
+        # TODO: Implement focus for buttons based on Tab traversal.
+        if value:
+            self.native.becomeFirstResponder()
+        else:
+            self.native.resignFirstResponder()
 
     def rehint(self):
         # Normal Cocoa "rounded" buttons have a fixed height by definition.
