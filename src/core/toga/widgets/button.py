@@ -9,7 +9,7 @@ class Button(Widget):
     Args:
         label (str): Text to be shown on the button.
         id (str): An identifier for this widget.
-        key_equivalent (str): An optional key combination to trigger the button.
+        key_equivalent (str): An optional shortcut key to 'press' the button.
         style (:obj:`Style`): An optional style object. If no style is provided then
             a new one will be created for the widget.
         on_press (:obj:`callable`): Function to execute when pressed.
@@ -54,9 +54,14 @@ class Button(Widget):
 
     @property
     def key_equivalent(self):
-        """
+        """	Setting the key_equivalent creates a shortcut key for the button.
+                On macOS, if set to '\r' the button will be activated when the 
+                user presses the return key and will set the Button as the
+                default for its window or dialog as indicated by the Button's
+                background color highlight. Not yet tested on other platforms.
+
         Returns:
-            The button key_equivalent as a ``str``
+            The button key_equivalent as a ``str``.
         """
         return self._key_equivalent
 
